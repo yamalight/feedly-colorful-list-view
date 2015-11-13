@@ -4,7 +4,7 @@
 // @description Colorizes items headers based on their source
 // @include     http*://feedly.com/*
 // @include     http*://*.feedly.com/*
-// @version     0.5
+// @version     0.6
 // @grant       GM_addStyle
 // ==/UserScript==
 
@@ -12,15 +12,19 @@ var colors = {};
 
 function computeColor(title) {
     var h = 0;
+	
+	for each (var c in title) {
+		h += c.charCodeAt(0);
+	};
+	
+	var hs = {
+	    h: (h % 36 + 1) * 10,
+	    s: 30 + (h % 5 + 1) * 10,
+	};
 
-    for (var c in title) {
-        h += c.charCodeAt(0);
-    }
-    h = h % 360;
+    colors[title] = hs;
 
-    colors[title] = h;
-
-    return h;
+    return hs;
 }
 
 (function() {
@@ -47,13 +51,13 @@ function computeColor(title) {
                 var color = computeColor(title);
                 GM_addStyle(
                     "div[colored='" + title + "'] {" +
-                    "   background: hsl(" + color + ",70%,80%) !important; }" +
+                    "   background: hsl(" + color['h'] + "," + color['s'] + "%,80%) !important; }" +
                     "div[colored='" + title + "']:hover {" +
-                    "   background: hsl(" + color + ",90%,85%) !important; }" +
+                    "   background: hsl(" + color['h'] + "," + color['s'] + "%,85%) !important; }" +
                     "div[colored='" + title + "']//a[contains(@class, 'read')] {" +
-                    "   background: hsl(" + color + ",70%,90%) !important; }" +
+                    "   background: hsl(" + color['h'] + "," + color['s'] + "%,90%) !important; }" +
                    "div[colored='" + title + "']//a[contains(@class, 'read')]:hover {" +
-                    "   background: hsl(" + color + ",90%,95%) !important; }");
+                    "   background: hsl(" + color['h'] + "," + color['s'] + "%,95%) !important; }");
             }
         });
     }, false);
