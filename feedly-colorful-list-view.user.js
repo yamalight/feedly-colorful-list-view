@@ -4,7 +4,7 @@
 // @description Colorizes items headers based on their source
 // @include     http*://feedly.com/*
 // @include     http*://*.feedly.com/*
-// @version     0.6
+// @version     0.7
 // @grant       GM_addStyle
 // ==/UserScript==
 
@@ -29,20 +29,20 @@ function computeColor(title) {
 
 (function() {
     GM_addStyle(
-        ".u0Entry { border-color: transparent !important; }" +
-        ".u0Entry .lastModified { color: #444 !important; }" +
-        ".u0Entry .sourceTitle a { color: #444 !important; font-weight: bold !important; }" +
-        "#timeline div.selectedEntry { border: 1px solid #444 !important; }");
+        ".entry { border-color: transparent !important; }" +
+        ".entry .ago { color: #444 !important; }" +
+        ".entry .source { color: #444 !important; font-weight: bold !important; }" +
+        "#timeline div.selected { border: 1px solid #444 !important; }");
 
     var timeline = document.getElementById("box");
     timeline.addEventListener("DOMNodeInserted", function() {
-        var elements = document.getElementsByClassName('u0Entry');
+        var elements = document.getElementsByClassName('entry');
         Array.from(elements)
         .filter(function(el) {
             return !el.getAttribute('colored');
         })
         .forEach(function(el) {
-            var title = el.querySelector("span.sourceTitle a").textContent;
+            var title = el.querySelector("a.source").textContent;
             title = title.replace(/\W/g, "-");
 
             el.setAttribute("colored", title);
