@@ -4,7 +4,7 @@
 // @description Colorizes items headers based on their source
 // @include     http*://feedly.com/*
 // @include     http*://*.feedly.com/*
-// @version     0.7
+// @version     0.7.1
 // @grant       GM_addStyle
 // ==/UserScript==
 
@@ -12,11 +12,11 @@ var colors = {};
 
 function computeColor(title) {
     var h = 0;
-	
-	for each (var c in title) {
+
+	for (var c in title) {
 		h += c.charCodeAt(0);
 	};
-	
+
 	var hs = {
 	    h: (h % 36 + 1) * 10,
 	    s: 30 + (h % 5 + 1) * 10,
