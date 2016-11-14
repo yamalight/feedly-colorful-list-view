@@ -13,8 +13,10 @@ const colors = {};
 const computeColor = (title) => {
   let h = 0;
 
-  for (let c in title) {
-    h += c.charCodeAt(0);
+  for (let i = 0; i < title.length; i++) {
+    let s = i !== 0 ? title.length % i : 1;
+    let r = s !== 0 ? title.charCodeAt(i) % s : title.charCodeAt(i);
+    h += r;
   }
 
   let hs = {
