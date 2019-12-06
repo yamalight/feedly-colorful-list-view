@@ -4,11 +4,18 @@
 // @description Colorizes items headers based on their source
 // @include     http*://feedly.com/*
 // @include     http*://*.feedly.com/*
-// @version     0.8.0
-// @grant       GM_addStyle
+// @version     0.9.0
 // ==/UserScript==
 
 const colors = {};
+
+// since GM_addStyle was deprecated - use custom function
+// that simply appends styles to head of the document
+const addStyle = styleText => {
+  const style = document.createElement('style');
+  style.appendChild(document.createTextNode(styleText));
+  document.head.appendChild(style);
+};
 
 const computeColor = (title) => {
   let h = 0;
@@ -29,7 +36,7 @@ const computeColor = (title) => {
   return hs;
 };
 
-GM_addStyle(`
+addStyle(`
   .entry { border-color: transparent !important; }
   .entry .ago { color: #444 !important; }
   .entry .source { color: #444 !important; font-weight: bold !important; }
@@ -51,7 +58,7 @@ timeline.addEventListener("DOMNodeInserted", function () {
     .forEach((title) => {
       if (!colors[title]) {
         const color = computeColor(title);
-        GM_addStyle(`
+        addStyle(`
           div[colored='${title}'] {
             background: hsl(${color.h},${color.s}%,80%) !important; }
           div[colored='${title}']:hover {
