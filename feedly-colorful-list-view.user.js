@@ -4,7 +4,7 @@
 // @description Colorizes items headers based on their source
 // @include     http*://feedly.com/*
 // @include     http*://*.feedly.com/*
-// @version     0.9.0
+// @version     0.10.0
 // ==/UserScript==
 
 const colors = {};
@@ -41,6 +41,9 @@ addStyle(`
   .entry .ago { color: #444 !important; }
   .entry .source { color: #444 !important; font-weight: bold !important; }
   #timeline div.selected { border: 1px solid #444 !important; }
+  .theme--dark .fx .entry .title { color: rgba(0, 0, 0, 0.88)!important; }
+  .theme--dark .fx .entry.read .title { color: rgba(0, 0, 0, .54)!important; }
+  .theme--dark .fx .entry.u0 { background: #f3f1f1; }
 `);
 
 const timeline = document.getElementById("box");
