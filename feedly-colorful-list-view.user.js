@@ -4,7 +4,7 @@
 // @description Colorizes items headers based on their source
 // @include     http*://feedly.com/*
 // @include     http*://*.feedly.com/*
-// @version     0.11.0
+// @version     0.11.1
 // ==/UserScript==
 
 const colors = {};
@@ -64,13 +64,13 @@ timeline.addEventListener("DOMNodeInserted", function () {
       if (!colors[title]) {
         const color = computeColor(title);
         addStyle(`
-          div[colored='${title}'] {
+          article[colored='${title}'] {
             background: hsl(${color.h},${color.s}%,80%) !important; }
-          div[colored='${title}']:hover {
+          article[colored='${title}']:hover {
             background: hsl(${color.h},${color.s}%,85%) !important; }
-          div[colored='${title}']//a[contains(@class, 'read')] {
+          article[colored='${title}']//a[contains(@class, 'read')] {
             background: hsl(${color.h},${color.s}%,90%) !important; }
-          div[colored='${title}']//a[contains(@class, 'read')]:hover {
+          article[colored='${title}']//a[contains(@class, 'read')]:hover {
             background: hsl(${color.h},${color.s}%,95%) !important; }
         `);
       }
