@@ -4,7 +4,7 @@
 // @description Colorizes items headers based on their source
 // @include     http*://feedly.com/*
 // @include     http*://*.feedly.com/*
-// @version     0.11.1
+// @version     0.11.2
 // ==/UserScript==
 
 const colors = {};
@@ -39,9 +39,10 @@ const computeColor = (title) => {
 addStyle(`
   .entry { border-color: transparent !important; }
   .entry .ago { color: #444 !important; }
-  .entry .source { color: #444 !important; font-weight: bold !important; }
+  .entry .entry__source { color: #444 !important; font-weight: bold !important; }
   #timeline div.selected { border: 1px solid #444 !important; }
   .theme--dark .fx .entry .title { color: rgba(0, 0, 0, 0.88)!important; }
+  .theme--dark .fx .entry .entry__source { color: rgba(0, 0, 0, 0.75)!important; }
   .theme--dark .fx .entry.read .title { color: rgba(0, 0, 0, .54)!important; }
   .theme--dark .fx .entry.u0 { background: #f3f1f1; }
   .theme--dark .fx .entry .entry__title { color: #000; }
@@ -54,9 +55,9 @@ timeline.addEventListener("DOMNodeInserted", function () {
   Array
     .from(elements)
     .filter(el => !el.getAttribute('colored'))
-    .filter(el => el.querySelector("a.source"))
+    .filter(el => el.querySelector("a.entry__source"))
     .map(el => {
-      const title = el.querySelector("a.source").textContent;
+      const title = el.querySelector("a.entry__source").textContent;
       el.setAttribute("colored", title);
       return title;
     })
