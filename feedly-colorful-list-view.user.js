@@ -4,7 +4,7 @@
 // @description Colorizes items headers based on their source
 // @include     http*://feedly.com/*
 // @include     http*://*.feedly.com/*
-// @version     0.11.2
+// @version     0.11.3
 // ==/UserScript==
 
 const colors = {};
@@ -49,7 +49,7 @@ addStyle(`
   .theme--dark .fx .entry.entry--read .entry__title { color: rgb(0 0 0 / 44%); }
 `);
 
-const timeline = document.getElementById("box");
+const timeline = document.getElementById("root");
 timeline.addEventListener("DOMNodeInserted", function () {
   const elements = document.getElementsByClassName('entry');
   Array
