@@ -39,14 +39,13 @@ const computeColor = (title) => {
 addStyle(`
   .entry { border-color: transparent !important; }
   .entry .ago { color: #444 !important; }
-  .entry .entry__source { color: #444 !important; font-weight: bold !important; }
+  .entry .EntryMetadataSource--title-only { color: #444 !important; font-weight: bold !important; }
   #timeline div.selected { border: 1px solid #444 !important; }
   .theme--dark .fx .entry .EntryTitle { color: rgba(0, 0, 0, 0.88)!important; }
-  .theme--dark .fx .entry .entry__source { color: rgba(0, 0, 0, 0.75)!important; }
-  .theme--dark .fx .entry.entry--read .entry__source { color: rgba(0, 0, 0, .54)!important; font-weight: normal!important; }
+  .theme--dark .fx .entry .EntryMetadataSource--title-only { color: rgba(0, 0, 0, 0.75)!important; }
+  .theme--dark .fx .entry.entry--read .EntryMetadataSource--title-only { color: rgba(0, 0, 0, .54)!important; font-weight: normal!important; }
   .theme--dark .fx .entry.entry--read .EntryTitle { color: rgba(0, 0, 0, .54)!important; font-weight: normal!important; }
   .theme--dark .fx .entry { color: rgba(0, 0, 0, .54)!important; }
-  .theme--dark .fx .entry.u0 { background: #f3f1f1; }
   .theme--dark .fx .entry .EntryTitle { color: #000; }
 `);
 
@@ -56,9 +55,9 @@ timeline.addEventListener("DOMNodeInserted", function () {
   Array
     .from(elements)
     .filter(el => !el.getAttribute('colored'))
-    .filter(el => el.querySelector("a.entry__source"))
+    .filter(el => el.querySelector("a.EntryMetadataSource--title-only"))
     .map(el => {
-      const title = el.querySelector("a.entry__source").textContent;
+      const title = el.querySelector("a.EntryMetadataSource--title-only").textContent;
       el.setAttribute("colored", title);
       return title;
     })
