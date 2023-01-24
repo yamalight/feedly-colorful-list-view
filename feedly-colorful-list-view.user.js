@@ -47,6 +47,8 @@ addStyle(`
   .entry .ago { color: #444 !important; }
   .entry .EntryMetadataSource--title-only { color: #444 !important; font-weight: bold !important; }
   #timeline div.selected { border: 1px solid #444 !important; }
+  .theme--dark .fx .entry .TitleOnlyEntry:hover { background: inherit !important; }
+  .theme--dark .fx .entry .TitleOnlyEntry { border: transparent !important; }
   .theme--dark .fx .entry .EntryTitle { color: rgba(0, 0, 0, 0.88)!important; }
   .theme--dark .fx .entry .EntryMetadataSource--title-only { color: rgba(0, 0, 0, 0.75)!important; }
   .theme--dark .fx .entry.entry--read .EntryMetadataSource--title-only { color: rgba(0, 0, 0, .54)!important; font-weight: normal!important; }
