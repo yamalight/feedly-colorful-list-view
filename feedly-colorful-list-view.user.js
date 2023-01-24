@@ -4,7 +4,7 @@
 // @description Colorizes items headers based on their source
 // @include     http*://feedly.com/*
 // @include     http*://*.feedly.com/*
-// @version     0.11.6
+// @version     0.11.7
 // ==/UserScript==
 
 const colors = {};
@@ -15,6 +15,12 @@ const addStyle = (styleText) => {
   const style = document.createElement('style');
   style.appendChild(document.createTextNode(styleText));
   document.head.appendChild(style);
+};
+
+// replaces all non-letters (utf-8) to cleanup the string for coloring
+// fixes https://github.com/yamalight/feedly-colorful-list-view/issues/2
+const cleanTitle = (title) => {
+  return title?.replace?.(/[^\p{L}\s]/gu, '');
 };
 
 const computeColor = (title) => {
@@ -58,7 +64,9 @@ timeline.addEventListener(
       .filter((el) => !el.getAttribute('colored'))
       .filter((el) => el.querySelector('a.EntryMetadataSource'))
       .map((el) => {
-        const title = el.querySelector('a.EntryMetadataSource').textContent;
+        const title = cleanTitle(
+          el.querySelector('a.EntryMetadataSource').textContent
+        );
         el.setAttribute('colored', title);
         return title;
       })
