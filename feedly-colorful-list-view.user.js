@@ -4,7 +4,7 @@
 // @description Colorizes items headers based on their source
 // @include     http*://feedly.com/*
 // @include     http*://*.feedly.com/*
-// @version     0.11.8
+// @version     0.11.9
 // ==/UserScript==
 
 const colors = {};
@@ -54,7 +54,7 @@ addStyle(`
   .theme--dark .fx .entry .EntryMetadataSource--title-only { color: rgba(0, 0, 0, 0.75)!important; }
   .theme--dark .fx .entry.entry--read .EntryMetadataSource--title-only { color: rgba(0, 0, 0, .54)!important; font-weight: normal!important; }
   .theme--dark .fx .entry.entry--read .EntryTitle { color: rgba(0, 0, 0, .54)!important; font-weight: normal!important; }
-  .theme--dark .fx .entry { color: rgba(0, 0, 0, .54)!important; }
+  .theme--dark .fx .entry { color: rgba(0, 0, 0, .54)!important; background: rgb(255 255 255 / 88%); }
   .theme--dark .fx .entry .EntryTitle { color: #000; }
 `);
 
