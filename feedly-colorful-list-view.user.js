@@ -4,7 +4,7 @@
 // @description Colorizes items headers based on their source
 // @include     http*://feedly.com/*
 // @include     http*://*.feedly.com/*
-// @version     0.11.11
+// @version     0.12.0
 // ==/UserScript==
 
 const colors = {};
@@ -59,36 +59,33 @@ addStyle(`
   .theme--dark .fx .entry .EntryTitle { color: #000; }
 `);
 
+const observer = new MutationObserver(function () {
+  const elements = document.getElementsByClassName('entry');
+  Array.from(elements)
+    .filter((el) => !el.getAttribute('colored'))
+    .filter((el) => el.querySelector('a.EntryMetadataSource'))
+    .map((el) => {
+      const title = cleanTitle(
+        el.querySelector('a.EntryMetadataSource').textContent
+      );
+      el.setAttribute('colored', title);
+      return title;
+    })
+    .forEach((title) => {
+      if (!colors[title]) {
+        const color = computeColor(title);
+        addStyle(`
+        article[colored='${title}'] {
+          background: hsl(${color.h},${color.s}%,80%) !important; }
+        article[colored='${title}']:hover {
+          background: hsl(${color.h},${color.s}%,85%) !important; }
+        article[colored='${title}']//a[contains(@class, 'read')] {
+          background: hsl(${color.h},${color.s}%,90%) !important; }
+        article[colored='${title}']//a[contains(@class, 'read')]:hover {
+          background: hsl(${color.h},${color.s}%,95%) !important; }
+      `);
+      }
+    });
+});
 const timeline = document.getElementById('root');
-timeline.addEventListener(
-  'DOMNodeInserted',
-  function () {
-    const elements = document.getElementsByClassName('entry');
-    Array.from(elements)
-      .filter((el) => !el.getAttribute('colored'))
-      .filter((el) => el.querySelector('a.EntryMetadataSource'))
-      .map((el) => {
-        const title = cleanTitle(
-          el.querySelector('a.EntryMetadataSource').textContent
-        );
-        el.setAttribute('colored', title);
-        return title;
-      })
-      .forEach((title) => {
-        if (!colors[title]) {
-          const color = computeColor(title);
-          addStyle(`
-          article[colored='${title}'] {
-            background: hsl(${color.h},${color.s}%,80%) !important; }
-          article[colored='${title}']:hover {
-            background: hsl(${color.h},${color.s}%,85%) !important; }
-          article[colored='${title}']//a[contains(@class, 'read')] {
-            background: hsl(${color.h},${color.s}%,90%) !important; }
-          article[colored='${title}']//a[contains(@class, 'read')]:hover {
-            background: hsl(${color.h},${color.s}%,95%) !important; }
-        `);
-        }
-      });
-  },
-  false
-);
+observer.observe(timeline, { childList: true, subtree: true });
