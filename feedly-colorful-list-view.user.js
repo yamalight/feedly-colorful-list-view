@@ -4,7 +4,7 @@
 // @description Colorizes items headers based on their source
 // @include     http*://feedly.com/*
 // @include     http*://*.feedly.com/*
-// @version     0.12.1
+// @version     0.12.2
 // ==/UserScript==
 
 const colors = {};
@@ -44,6 +44,7 @@ const computeColor = (title) => {
 
 addStyle(`
   .entry { border-color: transparent !important; }
+  .entry .SelectedEntryScroller > div { border-color: transparent !important; }
   .entry .ago { color: #444 !important; }
   .entry .EntryMetadataSource--title-only { color: #444 !important; font-weight: bold !important; }
   #timeline div.selected { border: 1px solid #444 !important; }
